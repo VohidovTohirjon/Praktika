@@ -8,9 +8,6 @@ namespace Praktika.Service.Helpers
 
         public static HttpContext Context => Accessor?.HttpContext;
 
-
-
-
         public static IHeaderDictionary ResponseHeader => Context?.Response?.Headers;
     }
 }
