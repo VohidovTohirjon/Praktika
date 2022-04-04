@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Praktika.Controllers
 {
     [ApiController]
-    [Route("Api/[controller]")]
+    [Route("[controller]")]
     public class ContentController : ControllerBase
     {
 
@@ -29,7 +29,7 @@ namespace Praktika.Controllers
             return StatusCode(result.Error is null ? result.Code : result.Error.Code, result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{content-id}")]
         public async Task<ActionResult<BaseResponse<Course>>> Get(Guid id)
         {
             var result = await contentservice.GetAsync(p => p.Id == id);
@@ -44,7 +44,7 @@ namespace Praktika.Controllers
 
             return StatusCode(result.Error is null ? result.Code : result.Error.Code, result);
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{content-id}")]
         public async Task<ActionResult<BaseResponse<bool>>> Delete(Guid id)
         {
             var result = await contentservice.DeleteAsync(p => p.Id == id);
@@ -52,7 +52,7 @@ namespace Praktika.Controllers
             return StatusCode(result.Error is null ? result.Code : result.Error.Code, result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{content-id}")]
         public async Task<ActionResult<BaseResponse<Content>>> Update(Guid id, [FromForm] ContentCreateDto courseDto)
         {
             var result = await contentservice.UpdateAsync(id, courseDto);

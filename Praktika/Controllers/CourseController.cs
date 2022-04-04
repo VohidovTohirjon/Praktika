@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Praktika.Controllers
 {
     [ApiController]
-    [Route("Api/[controller]")]
+    [Route("[controller]")]
     public class CourseController : ControllerBase
     {
 
@@ -32,7 +32,7 @@ namespace Praktika.Controllers
             return StatusCode(result.Error is null ? result.Code : result.Error.Code, result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{course-id}")]
         public async Task<ActionResult<BaseResponse<Course>>> Get(Guid id)
         {
             var result = await courseservice.GetAsync(p => p.UserId == id);
@@ -47,7 +47,7 @@ namespace Praktika.Controllers
 
             return StatusCode(result.Error is null ? result.Code : result.Error.Code, result);
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{course-id}")]
         public async Task<ActionResult<BaseResponse<bool>>> Delete(Guid id)
         {
             var result = await courseservice.DeleteAsync(p => p.Id == id);
@@ -55,7 +55,7 @@ namespace Praktika.Controllers
             return StatusCode(result.Error is null ? result.Code : result.Error.Code, result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{course-id}")]
         public async Task<ActionResult<BaseResponse<Course>>> Update(Guid id, [FromForm] CourseCreateDto courseDto)
         {
             var result = await courseservice.UpdateAsync(id, courseDto);
