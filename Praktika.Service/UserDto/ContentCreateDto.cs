@@ -10,6 +10,7 @@ namespace Praktika.Service.UserDto
     {
         [Required]
         public int Duration { get; set; }
+
         [Required]
         public string TypeOfCourse { get; set; }
         public ItemState State { get; set; }
@@ -19,6 +20,7 @@ namespace Praktika.Service.UserDto
         [MaxFileSize(5 * 1024 * 1024)]
         [AllowedExtensions(new string[] { ".jpg", ".png" })]
         public IFormFile Image { get; set; }
+
         [Required]
         public Guid CourseId { get; set; }
     }

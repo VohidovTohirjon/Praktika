@@ -125,6 +125,21 @@ namespace Praktika.Service.Sertvices
 
             return response;
         }
+        public async Task<BaseResponse<User>> LoginAsync(string email, string password)
+        {
+            var response = new BaseResponse<User>();
 
+            var User = await unitofwork.User.GetAsync(p => p.Email == email && p.Password == password && p.State != ItemState.Deleted);
+            if (User is null)
+            {
+                response.Error = new ErrorModel(404, "Login or password wrong");
+                return response;
+            }
+
+
+            response.Data = User;
+
+            return response;
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace Praktika.Service.Interface
 
         Task<BaseResponse<bool>> DeleteAsync(Expression<Func<User, bool>> expression);
 
+        Task<BaseResponse<User>> LoginAsync(string email, string password);
 
     }
 }

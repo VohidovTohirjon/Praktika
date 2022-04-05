@@ -15,6 +15,7 @@ namespace Praktika.Service.UserDto
 
         [Required, MinLength(8)]
         public string Password { get; set; }
+
         [Required, EmailAddress]
         public string Email { get; set; }
         public ItemState State { get; set; }

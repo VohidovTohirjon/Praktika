@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Praktika.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("user")]
     public class UserController : ControllerBase
     {
         private readonly IUserService userservice;
@@ -32,7 +32,7 @@ namespace Praktika.Controllers
         }
 
         [HttpGet("{user-id}")]
-        public async Task<ActionResult<BaseResponse<User>>> Get(Guid id)
+        public async Task<ActionResult<BaseResponse<User>>> Get([FromRoute(Name = "user-id")]Guid id)
         {
             var result = await userservice.GetAsync(p => p.Id == id);
 
@@ -47,7 +47,7 @@ namespace Praktika.Controllers
             return StatusCode(result.Error is null ? result.Code : result.Error.Code, result);
         }
         [HttpDelete("{user-id}")]
-        public async Task<ActionResult<BaseResponse<bool>>> Delete(Guid id)
+        public async Task<ActionResult<BaseResponse<bool>>> Delete([FromRoute(Name = "user-id")]Guid id)
         {
             var result = await userservice.DeleteAsync(p => p.Id == id);
 
@@ -55,10 +55,18 @@ namespace Praktika.Controllers
         }
 
         [HttpPut("{user-id}")]
-        public async Task<ActionResult<BaseResponse<User>>> Update(Guid id, [FromForm] UserCreateDto userDto)
+        public async Task<ActionResult<BaseResponse<User>>> Update([FromRoute(Name ="user-id")]Guid id, [FromForm]UserCreateDto userDto)
         {
             var result = await userservice.UpdateAsync(id, userDto);
 
+            return StatusCode(result.Error is null ? result.Code : result.Error.Code, result);
+        }
+
+        [HttpGet]
+        [Route("login")]
+        public async Task<ActionResult<BaseResponse<User>>> Login([FromQuery] string email, [FromQuery] string password)
+        {
+            var result = await userservice.LoginAsync(email, password);
             return StatusCode(result.Error is null ? result.Code : result.Error.Code, result);
         }
 

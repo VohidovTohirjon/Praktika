@@ -14,6 +14,7 @@ using Praktika.Service.Helpers;
 using Praktika.Service.Interface;
 using Praktika.Service.Mapping;
 using Praktika.Service.Sertvices;
+using System.Text.Json.Serialization;
 
 namespace Praktika
 {
@@ -37,7 +38,8 @@ namespace Praktika
             });
             services.AddScoped<IUserService, UserService>();
             services.AddControllers().AddNewtonsoftJson();
-
+            services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Praktika", Version = "v1" });

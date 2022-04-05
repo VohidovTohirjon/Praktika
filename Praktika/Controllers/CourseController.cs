@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Praktika.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("course")]
     public class CourseController : ControllerBase
     {
 
@@ -33,9 +33,9 @@ namespace Praktika.Controllers
         }
 
         [HttpGet("{course-id}")]
-        public async Task<ActionResult<BaseResponse<Course>>> Get(Guid id)
+        public async Task<ActionResult<BaseResponse<Course>>> Get([FromRoute(Name = "course-id")] Guid id)
         {
-            var result = await courseservice.GetAsync(p => p.UserId == id);
+            var result = await courseservice.GetAsync(p => p.Id == id);
 
             return StatusCode(result.Error is null ? result.Code : result.Error.Code, result);
         }
@@ -48,7 +48,7 @@ namespace Praktika.Controllers
             return StatusCode(result.Error is null ? result.Code : result.Error.Code, result);
         }
         [HttpDelete("{course-id}")]
-        public async Task<ActionResult<BaseResponse<bool>>> Delete(Guid id)
+        public async Task<ActionResult<BaseResponse<bool>>> Delete([FromRoute(Name = "course-id")] Guid id)
         {
             var result = await courseservice.DeleteAsync(p => p.Id == id);
 
@@ -56,7 +56,7 @@ namespace Praktika.Controllers
         }
 
         [HttpPut("{course-id}")]
-        public async Task<ActionResult<BaseResponse<Course>>> Update(Guid id, [FromForm] CourseCreateDto courseDto)
+        public async Task<ActionResult<BaseResponse<Course>>> Update([FromRoute(Name = "course-id")] Guid id, [FromForm] CourseCreateDto courseDto)
         {
             var result = await courseservice.UpdateAsync(id, courseDto);
 
